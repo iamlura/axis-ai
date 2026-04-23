@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import BaseFrame, { FrequentFilesHome, FrequentApps } from "../imports/Frame2055246477";
-import { AppGrid } from "../imports/Frame2055246592";
-import Frame2055246597 from "../imports/Frame2055246597";
+import { useState } from "react";
+import BaseFrame, { FrequentFilesHome, FrequentApps } from "./Frame2055246477";
+import { AppGrid } from "./Frame2055246592";
+import Frame2055246597 from "./Frame2055246597";
 import AnimatedNavBar from "./components/AnimatedNavBar";
 import AiChatInteractive from "./components/AiChatInteractive";
 

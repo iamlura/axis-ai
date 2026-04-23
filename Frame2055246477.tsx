@@ -14,7 +14,7 @@ import imgCreativeCloudIcon from "figma:asset/bd9fd2e0c7915f80a0fe4de0914b4f4845
 import imgPhotoshopIcon from "figma:asset/9cdc3207fe2eea4fa42c7e148e0ee466abca33a5.png";
 import imgIllustratorIcon from "figma:asset/0c4a3f3d5a5b5d56c348c7dd7d67bee06c60b34f.png";
 import imgAfterEffectsIcon from "figma:asset/990f017af5ab490c3312ead197736862430b9102.png";
-import AiChatInteractive from "../app/components/AiChatInteractive";
+import AiChatInteractive from "./app/components/AiChatInteractive";
 
 function Frame4() {
   return (
