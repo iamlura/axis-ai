@@ -11,9 +11,12 @@ export default function AiChatInteractive({ onSubmit }: AiChatInteractiveProps) 
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = () => {
-    if (query.trim() && onSubmit) {
-      onSubmit(query.trim());
+    const trimmed = query.trim();
+    if (trimmed && onSubmit) {
+      onSubmit(trimmed);
     }
+    // Always clear input on submit so the "Ask Anything" placeholder returns
+    setQuery("");
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -21,6 +24,11 @@ export default function AiChatInteractive({ onSubmit }: AiChatInteractiveProps) 
       handleSubmit();
     }
   };
+
+  // Show the custom placeholder only when input is empty.
+  // Opacity: 100% when idle (unfocused + empty), 20% when focused + empty, hidden when text is entered.
+  const showPlaceholder = query.length === 0;
+  const placeholderOpacity = isFocused ? 0.2 : 1;
 
   return (
     <div
@@ -48,25 +56,49 @@ export default function AiChatInteractive({ onSubmit }: AiChatInteractiveProps) 
           </div>
         </div>
 
-        {/* Input Field */}
+        {/* Input Field + custom placeholder overlay */}
         <div className="content-stretch flex items-center relative shrink-0" data-name="Search Text" style={{ width: "560px" }}>
-          <input
-            ref={inputRef}
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            placeholder="Ask Anything"
-            className="bg-transparent border-none outline-none w-full"
-            style={{
-              fontFamily: "'Google Sans Flex', sans-serif",
-              fontSize: "24.951px",
-              color: "black",
-              caretColor: "black",
-            }}
-          />
+          <div style={{ position: "relative", width: "100%" }}>
+            {showPlaceholder && (
+              <span
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  pointerEvents: "none",
+                  opacity: placeholderOpacity,
+                  transition: "opacity 250ms ease",
+                  color: "black",
+                  fontFamily: "'Google Sans Flex', sans-serif",
+                  fontSize: "24.951px",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Ask Anything
+              </span>
+            )}
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              placeholder="Ask Anything"
+              className="axis-chat-input bg-transparent border-none outline-none w-full"
+              style={{
+                fontFamily: "'Google Sans Flex', sans-serif",
+                fontSize: "24.951px",
+                color: "black",
+                caretColor: "black",
+                position: "relative",
+                zIndex: 1,
+              }}
+            />
+          </div>
         </div>
       </div>
 
